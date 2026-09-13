@@ -4,7 +4,7 @@ A CNN + attention model for sgRNA on-target editing efficiency, benchmarked agai
 reproduced Rule Set 2 gradient-boosted-tree baseline, with attention-based
 interpretability and conformal prediction intervals.
 
-**Headline result.** The Rule Set 2 baseline reproduces at **0.515 ± 0.082** mean
+**Headline result.** The Rule Set 2 baseline reproduces at **0.515 +/- 0.082** mean
 per-gene Spearman under leave-one-gene-out, inside the band Doench et al. report. The
 CNN + attention model **ties** it (0.507, paired Wilcoxon p = 0.77) and beats it on the
 frozen gene-held-out test set (0.495 vs 0.454), but does not beat a tuned LightGBM on
@@ -19,7 +19,7 @@ predicts, and a gradient-boosted-tree importance control independently agrees.
 The trained model and all results are committed, so nothing needs retraining.
 
 **Just look at the results.** Open `dashboard/index.html` in any browser. It is a single
-self-contained file — no server, no install, no network. Eight sections including a guide
+self-contained file: no server, no install, no network. Eight sections including a guide
 scorer that runs the trained network in your browser.
 
 **Run the interactive version.**
@@ -60,30 +60,30 @@ off-target effects of CRISPR-Cas9*, Nature Biotechnology 34:184, via the authors
 Rule Set 2 codebase and ships the training data.
 
 **What the dataset actually is.** The file `azimuth/data/FC_plus_RES_withPredictions.csv`
-is the merged V1 + V2 table that Azimuth's `load_data.mergeV1_V2` writes out — the
+is the merged V1 + V2 table that Azimuth's `load_data.mergeV1_V2` writes out, the
 combined dataset Rule Set 2 was trained on.
 
 | | |
 |---|---|
-| Rows (guide × drug observations) | 5,310 |
+| Rows (guide x drug observations) | 5,310 |
 | Unique 30mer sequences | 4,379 |
 | Genes | 17 |
 | FC half (Doench 2014 flow cytometry) | 1,837 rows, 9 genes |
 | RES half (Doench 2016 resistance screens) | 3,473 rows, 8 genes |
-| Target | `score_drug_gene_rank` ∈ (0, 1], higher = more active |
+| Target | `score_drug_gene_rank` in (0, 1], higher = more active |
 
 The target is the measured activity **rank-transformed within each (gene, drug) group**
 and scaled to the unit interval. That grouping is why every metric below is computed
-per gene group rather than pooled — pooling measures something different and reads
+per gene group rather than pooled. Pooling measures something different and reads
 higher.
 
-**Sequence layout.** Each 30mer is 4nt of 5′ context + the 20nt protospacer + the 3nt
-NGG PAM + 3nt of 3′ context. Verified: all 5,310 sequences are exactly 30nt over the
-ACGT alphabet with `GG` at 0-indexed positions 25–26.
+**Sequence layout.** Each 30mer is 4nt of 5' context + the 20nt protospacer + the 3nt
+NGG PAM + 3nt of 3' context. Verified: all 5,310 sequences are exactly 30nt over the
+ACGT alphabet with `GG` at 0-indexed positions 25-26.
 
 **Verification, not assumption.** `crispr/data.py` re-derives the target from the raw
 `V1_data.xlsx` and `V2_data.xlsx` files by porting Azimuth's Python 2 rank-transform
-logic, and compares it to the shipped CSV. Maximum absolute difference: **5 × 10⁻¹⁰**
+logic, and compares it to the shipped CSV. Maximum absolute difference: **5e-10**
 across all 5,310 rows. The CSV is the real thing.
 
 **One trap worth flagging.** The CSV also ships a `predictions` column. Scoring it gives
@@ -99,10 +99,10 @@ does.
 | Protocol | What it is | Why |
 |---|---|---|
 | **Leave-one-gene-out** (primary) | 17 folds, one gene held out each time | Azimuth's own default (`learn_options['cv'] = 'gene'`) and how Doench 2016 Fig. 4 reports Spearman. The paper-comparable number. |
-| **Frozen gene-held-out** | whole genes → 60% train / 20% calibration / 20% test | A single fixed split, needed for conformal (which requires a disjoint calibration set) and for saving one inspectable model. Genes: train = CD43, H2-K, HPRT1, MED12, NF1, NF2; cal = CCDC101, CD13, CD33, CD5, THY1; test = CD15, CD28, CD45, CUL3, TADA1, TADA2B. |
+| **Frozen gene-held-out** | whole genes into 60% train / 20% calibration / 20% test | A single fixed split, needed for conformal (which requires a disjoint calibration set) and for saving one inspectable model. Genes: train = CD43, H2-K, HPRT1, MED12, NF1, NF2; cal = CCDC101, CD13, CD33, CD5, THY1; test = CD15, CD28, CD45, CUL3, TADA1, TADA2B. |
 | **Random row-level** | 20% of rows at random | Reported **only as a leakage contrast**. Guides tiling one gene share sequence context and the target is ranked within gene, so a random split leaks. It inflates the GBT from 0.454 to 0.544. |
 
-Gene sizes are very uneven — MED12 alone is 35% of all rows — so genes are assigned
+Gene sizes are very uneven (MED12 alone is 35% of all rows), so genes are assigned
 largest-first to whichever split is furthest below its row quota, rather than at random.
 A naive random gene assignment produces unusable proportions.
 
@@ -110,7 +110,7 @@ A naive random gene assignment produces unusable proportions.
 
 ## 2. Benchmark
 
-Mean per-gene Spearman correlation; ± is the standard deviation across gene groups, which
+Mean per-gene Spearman correlation; +/- is the standard deviation across gene groups, which
 is how the paper draws its error bars.
 
 | Protocol | Model | Spearman | sd | pooled |
@@ -133,7 +133,7 @@ The spec called for stopping if the baseline fell outside the published range. I
 
 Doench 2016 reports the leave-one-gene-out Spearman for boosted regression trees
 **graphically** in Figure 4c, not as a number in the text, with visible spread across
-genes. The reproduction lands at **0.515 ± 0.082**, inside that band. Nothing was
+genes. The reproduction lands at **0.515 +/- 0.082**, inside that band. Nothing was
 hardcoded to hit it: the baseline uses Azimuth's exact hyperparameters
 (`GradientBoostingRegressor`, squared-error loss, lr 0.1, 100 trees, depth 3, no
 subsampling), read out of `models/ensembles.py`, on a feature set reproduced from
@@ -147,9 +147,9 @@ interval on the mean difference:
 
 | Comparison (leave-one-gene-out) | Mean diff | 95% CI | Wilcoxon p | Verdict |
 |---|---|---|---|---|
-| CNN − Rule Set 2 GBT | −0.0075 | [−0.036, +0.019] | 0.77 | tie |
-| CNN − LightGBM | −0.0305 | [−0.063, +0.004] | 0.067 | tie |
-| LightGBM − Rule Set 2 GBT | +0.0230 | [−0.007, +0.047] | 0.006 | small but consistent edge to LightGBM |
+| CNN - Rule Set 2 GBT | -0.0075 | [-0.036, +0.019] | 0.77 | tie |
+| CNN - LightGBM | -0.0305 | [-0.063, +0.004] | 0.067 | tie |
+| LightGBM - Rule Set 2 GBT | +0.0230 | [-0.007, +0.047] | 0.006 | small but consistent edge to LightGBM |
 
 The last row is the one place the two tests disagree, and the disagreement is
 informative rather than a problem: the Wilcoxon says LightGBM wins on *most individual
@@ -157,7 +157,7 @@ genes* (consistent sign), while the bootstrap CI on the *mean* includes zero (sm
 effect size). LightGBM is reliably a little better, not decisively better.
 
 **So: does the CNN match or beat the baseline?** Against the reproduced Rule Set 2
-model, yes — it ties under the paper protocol and wins on the frozen test set. Against a
+model, yes: it ties under the paper protocol and wins on the frozen test set. Against a
 modern GBT on the same features, no. On ~4k guides, a learned sequence representation
 buys nothing over well-chosen k-mer features. That is the honest finding and it is
 consistent with why Rule Set 2 has held up as a baseline for a decade.
@@ -168,13 +168,13 @@ consistent with why Rule Set 2 has held up as a baseline for a decade.
 
 ```
 (30, 4) one-hot 30mer
-  → Conv1d k=3, 64 filters  → BatchNorm → ReLU → Dropout1d(0.35)
-  → Conv1d k=5, 128 filters → BatchNorm → ReLU → Dropout1d(0.35)
-  → + learned positional embedding
-  → single-head self-attention over the 30 positions   ─┐ weights retained
-  → attention-weighted pooling over positions          ─┘ for interpretability
-  → concat with 10-dim thermodynamic / gene-position vector
-  → Dense 64 → 16 → 1, dropout 0.3, sigmoid
+  -> Conv1d k=3, 64 filters  -> BatchNorm -> ReLU -> Dropout1d(0.35)
+  -> Conv1d k=5, 128 filters -> BatchNorm -> ReLU -> Dropout1d(0.35)
+  -> + learned positional embedding
+  -> single-head self-attention over the 30 positions   |  weights from both
+  -> attention-weighted pooling over positions          |  kept for interpretability
+  -> concat with 10-dim thermodynamic / gene-position vector
+  -> Dense 64 -> 16 -> 1, dropout 0.3, sigmoid
 ```
 
 Sigmoid rather than linear because the target is a rank in (0, 1].
@@ -182,7 +182,7 @@ Sigmoid rather than linear because the target is a rank in (0, 1].
 **Two deviations from the original spec, both forced by measurement.**
 
 1. **A learned positional embedding was added.** Convolutions are translation-equivariant,
-   so without one the network genuinely cannot tell position 4 from position 20 — yet
+   so without one the network genuinely cannot tell position 4 from position 20, yet
    Rule Set 2 draws 58% of its Gini importance from *position-specific* nucleotide
    identity. This was the clearest structural gap, worth +0.010 on the selection CV.
 2. **`Dropout1d` in the conv stack.** The literal spec architecture reached 0.99 training
@@ -192,20 +192,20 @@ Sigmoid rather than linear because the target is a rank in (0, 1].
 **Thermodynamic features** (GC count of the protospacer, melting temperature of the full
 30mer and of Azimuth's three sub-segments, percent peptide, amino-acid cut position) enter
 at the fusion step, not through the conv stack. Removing the gene-position features was
-tried and made things substantially worse (0.377 → 0.179), so they were kept.
+tried and made things substantially worse (0.377 down to 0.179), so they were kept.
 
 ### Selection methodology
 
 Twenty configurations were compared. To keep the reported test numbers honest,
-**selection used leave-one-gene-out restricted to the six training genes only** — the
+**selection used leave-one-gene-out restricted to the six training genes only**. The
 test and calibration genes were never loaded during the sweep
 (`scripts/03a_sweep_cnn.py`, `scripts/03b_sweep_round2.py`).
 
 One caution about reading those sweep numbers: the inner protocol trains on 5 genes
 instead of 16, so everything scores lower there. The GBT was re-measured on the *same*
 inner protocol (0.505, not its 0.515 leave-one-gene-out figure) to establish the correct
-bar, which is why the CNN's 0.392 inner-CV score did not lead to abandoning the model —
-and indeed it reached 0.507 once given the full protocol.
+bar, which is why the CNN's 0.392 inner-CV score did not lead to abandoning the model.
+It reached 0.507 once given the full protocol.
 
 Each reported fold is an ensemble of 3 seeds, each with its own inner validation gene
 subset, with early stopping on validation Spearman.
@@ -221,16 +221,16 @@ guides:
 
 | Region | Mean weight | vs uniform (1/30) |
 |---|---|---|
-| PAM (NGG) | 0.0842 | **2.53×** |
-| Seed, protospacer 17–20 | 0.0604 | **1.81×** |
-| Rest of protospacer, 1–16 | 0.0269 | 0.81× |
-| 5′ context (−4…−1) | 0.0083 | 0.25× |
-| 3′ context (+1…+3) | 0.0142 | 0.43× |
+| PAM (NGG) | 0.0842 | **2.53x** |
+| Seed, protospacer 17-20 | 0.0604 | **1.81x** |
+| Rest of protospacer, 1-16 | 0.0269 | 0.81x |
+| 5' context (-4 to -1) | 0.0083 | 0.25x |
+| 3' context (+1 to +3) | 0.0142 | 0.43x |
 
-Seed vs rest-of-protospacer, paired across guides: Wilcoxon p ≈ 3 × 10⁻¹²³.
+Seed vs rest-of-protospacer, paired across guides: Wilcoxon p ~ 3e-123.
 
 The seed-region prior holds. Weight rises monotonically along the protospacer toward the
-PAM and peaks at the PAM's variable N base — consistent with Cas9 requiring PAM
+PAM and peaks at the PAM's variable N base, which is consistent with Cas9 requiring PAM
 recognition before it interrogates the protospacer, and with seed-proximal mismatches
 being the most disruptive.
 
@@ -247,42 +247,42 @@ agree on where the signal is, which is much stronger evidence than either alone.
 ![calibration](figures/calibration.png)
 
 Split conformal with absolute-residual nonconformity scores and the finite-sample
-quantile correction ⌈(n+1)(1−α)⌉/n, calibrated on a held-out set disjoint from both
+quantile correction ceil((n+1)(1-alpha))/n, calibrated on a held-out set disjoint from both
 training and test.
 
 | Split | n_cal | n_test | Coverage at 90% nominal | Half-width | Mean abs gap, all levels |
 |---|---|---|---|---|---|
-| Random (exchangeable) | 1,016 | 1,103 | **90.2%** | ±0.378 | 0.035 |
-| Gene-held-out (shifted) | 1,059 | 1,066 | 93.4% | ±0.404 | 0.011 |
+| Random (exchangeable) | 1,016 | 1,103 | **90.2%** | +/-0.378 | 0.035 |
+| Gene-held-out (shifted) | 1,059 | 1,066 | 93.4% | +/-0.404 | 0.011 |
 
 Both were run deliberately. Conformal's guarantee requires calibration and test data to
 be **exchangeable**. Under the random split they are, and coverage tracks nominal almost
-exactly — that validates the implementation. Under the gene-held-out split the
+exactly, which validates the implementation. Under the gene-held-out split the
 calibration genes and test genes are disjoint, so the guarantee does not formally hold;
 empirically it comes out *conservative* (93.4% at nominal 90%) with wider intervals,
 which is the safe direction but is luck rather than a theorem.
 
-The honest caveat is about usefulness, not correctness: a ±0.38 interval on a target
+The honest caveat is about usefulness, not correctness: a +/-0.38 interval on a target
 bounded in (0, 1] is wide. These intervals are informative for flagging which predictions
 not to trust, not for fine-grained ranking of individual guides.
 
 ---
 
-## 6. Chromatin channel — cut, with evidence
+## 6. Chromatin channel: cut, with evidence
 
 The spec required cutting this phase rather than proceeding on a guessed ENCODE
 accession. `scripts/04_chromatin_feasibility.py` queries the ENCODE portal live and
 records the result. Three independent blockers, any one of which is sufficient:
 
-1. **The main cell line has no accessibility data.** The RES half — 65% of all rows — was
+1. **The main cell line has no accessibility data.** The RES half, 65% of all rows, was
    screened in A375 melanoma. A375 has **zero** ATAC-seq or DNase-seq experiments on
    ENCODE; its only ENCODE data is RNA-based (small RNA-seq, total RNA-seq, RAMPAGE).
 2. **There is no single cell line to match.** The remaining 35% comes from NB4, TF1 and
    MOLM-13 plus mouse cell lines. TF1 has no ENCODE data at all. Matching per-row would
    need several tracks across two genomes.
 3. **There are no genomic coordinates to look anything up with.** The Azimuth release
-   carries only Ensembl transcript IDs and transcript-relative cut positions — no
-   chromosome, no genomic start/end. Querying a bigWig would require a separate
+   carries only Ensembl transcript IDs and transcript-relative cut positions, with no
+   chromosome and no genomic start/end. Querying a bigWig would require a separate
    transcript-to-genome mapping step first.
 
 Substituting a track from a different cell line would silently inject the wrong biology
@@ -292,7 +292,7 @@ into the majority of the training data. The phase is cut, not deferred.
 
 ## 7. Validation
 
-`scripts/08_validate.py` runs 39 adversarial checks — written so that each would
+`scripts/08_validate.py` runs 39 adversarial checks, written so that each would
 actually fail if the corresponding bug were present. All 39 pass. The ones that carry
 real weight:
 
@@ -301,7 +301,7 @@ real weight:
 | **Label-shuffle negative control.** Shuffle the target within each gene group and retrain. Any leakage in the split or features would still score above zero. | shuffled **+0.008** vs real **+0.454** |
 | **Independent agreement with the released Azimuth model.** Our reproduced features + Azimuth's hyperparameters, fit in-sample, vs the shipped predictions. A weak match would mean the feature reproduction is wrong. | Spearman **0.966**; our in-sample ceiling 0.713 vs their 0.715 |
 | **Sequence leakage across the reported splits.** | gene-held-out: **0 shared 30mers** between train/cal/test |
-| **Conformal on synthetic exchangeable data**, where the right answer is known. | nominal 0.95/0.90/0.80 → empirical 0.950/0.899/0.805 |
+| **Conformal on synthetic exchangeable data**, where the right answer is known. | nominal 0.95/0.90/0.80 gives empirical 0.950/0.899/0.805 |
 | **Row accounting against the paper.** | RES unique guides = **2,549**, exactly as published; FC = 1,837 vs 1,841 (Azimuth's gene-position join drops a few, per its own comment) |
 | **Headline numbers recomputed** from saved predictions, independently of the phase scripts. | reproduce to 1e-9 |
 | **Feature unit tests** on a hand-checkable probe sequence: GC count, NGGX one-hot, k-mer counts, one-hot, matrix width. | all exact |
@@ -317,8 +317,8 @@ saw gives **89.2%** at 90% nominal, against 90.2% on all rows.
 
 **Melting temperature on short segments is not physically meaningful.** Rule Set 2 computes
 Tm on 5nt, 8nt and 5nt sub-segments, which is below the range where nearest-neighbour
-thermodynamics is valid; the 5-mer values come out negative (−69 to +1 °C). This is
-inherited from the original design, not introduced here — Azimuth computes Tm on exactly
+thermodynamics is valid; the 5-mer values come out negative (-69 to +1  degC). This is
+inherited from the original design, not introduced here; Azimuth computes Tm on exactly
 these segments. The values still function as deterministic sequence summaries, which is
 how the model uses them, but they should not be read as temperatures.
 
@@ -333,11 +333,11 @@ how the model uses them, but they should not be read as temperatures.
 Two views of the same numbers, both reading the payload written by
 `scripts/09_export_dashboard.py` so they cannot drift apart.
 
-**Static** — `dashboard/index.html`, a single 2.9 MB file with no external requests. Opens
+**Static.** `dashboard/index.html`, a single 2.9 MB file with no external requests. Opens
 from `file://`, hosts on GitHub Pages unchanged. Eight sections: benchmark, live scorer,
 guide explorer, attention, calibration, architecture selection, validation, data.
 
-**Streamlit** — `dashboard/app.py`, the same eight sections with Plotly charts, for local
+**Streamlit.** `dashboard/app.py`, the same eight sections with Plotly charts, for local
 exploration.
 
 ```bash
@@ -346,20 +346,20 @@ exploration.
 .venv/bin/streamlit run dashboard/app.py               # interactive version
 ```
 
-To publish the static one: Settings → Pages → deploy from branch `main`, folder `/ (root)`.
+To publish the static one: Settings > Pages > deploy from branch `main`, folder `/ (root)`.
 Pages only serves from the root or `/docs`, so the dashboard lands at
 `<pages-url>/dashboard/` rather than the bare domain. No build step is needed on the
 hosting side.
 
 ### Scoring a guide
 
-Both dashboards score arbitrary 30mers with the **gene-held-out ensemble** — the same
-three-seed model behind the reported 0.495 test number, not an in-sample refit — and wrap
-the prediction in a conformal interval calibrated on held-out genes.
+Both dashboards score arbitrary 30mers with the **gene-held-out ensemble**, the same
+three-seed model behind the reported 0.495 test number rather than an in-sample refit,
+and wrap the prediction in a conformal interval calibrated on held-out genes.
 
 One constraint is worth stating plainly: the model's thermodynamic block includes three
 gene-position features (percent peptide, amino-acid cut position, and the <50% indicator)
-that a bare 30mer cannot supply. The sweep measured what removing them costs (0.377 →
+that a bare 30mer cannot supply. The sweep measured what removing them costs (0.377 down to
 0.179 inner-CV Spearman), so they are load-bearing rather than decorative. Both dashboards
 default them to the training median and let you set them explicitly, which makes a pasted
 sequence *sequence-conditional at an average locus* rather than silently wrong.
@@ -367,7 +367,7 @@ sequence *sequence-conditional at an average locus* rather than silently wrong.
 ### The browser runs the real model
 
 The static page has no server, so `dashboard/static/infer.js` is a hand port of
-`CrisprCNN.forward` plus the feature extraction — convolutions, batch norm at eval,
+`CrisprCNN.forward` plus the feature extraction: convolutions, batch norm at eval,
 positional embedding, self-attention, attention pooling, and the fusion head, over weights
 inlined as base64 float32.
 
@@ -450,8 +450,8 @@ dashboard/
   numbers are inflated.
 - **Melting temperature is not bit-identical to Azimuth's.** Biopython removed
   `Tm_staluc` in 1.77; `Tm_NN` with the `DNA_NN2` (SantaLucia 1998) table is used instead.
-  Same nearest-neighbour parameters, slightly different salt-correction defaults —
-  absolute Tm shifts a little, ranking across guides does not. Separately, the 5nt and
+  Same nearest-neighbour parameters, slightly different salt-correction defaults,
+  so absolute Tm shifts a little while ranking across guides does not. Separately, the 5nt and
   8nt segment Tms are non-physical (see Validation); that quirk is inherited from Rule
   Set 2's original feature definition.
 - **Conformal under gene shift has no guarantee.** It happened to be conservative here.

@@ -62,14 +62,14 @@
 
     root.innerHTML =
       "<h2>Does the CNN beat the gradient-boosted-tree baseline?</h2>" +
-      "<p class='lead'><strong>No — it ties under the paper's protocol and wins on the frozen " +
+      "<p class='lead'><strong>No. It ties under the paper's protocol and wins on the frozen " +
       "test split, and neither result beats a tuned LightGBM on the same hand-crafted " +
       "features.</strong> On roughly 4,400 guides, a learned sequence representation buys " +
       "nothing over well-chosen k-mer features.</p>" +
       "<div class='chart' id='c-bench'></div>" +
       "<p class='cap'>Mean Spearman across the 18 (gene, drug) evaluation groups; error bars " +
-      "are ±1 SD across those groups. That spread (~0.08) is larger than every gap between " +
-      "models, which is the whole story. Dashed lines mark the 0.4–0.6 band Doench 2016 " +
+      "are +/-1 SD across those groups. That spread (~0.08) is larger than every gap between " +
+      "models, which is the whole story. Dashed lines mark the 0.4-0.6 band Doench 2016 " +
       "reports graphically for boosted regression trees in Fig. 4c.</p>" +
       "<h3>Are the differences real?</h3>" +
       "<div id='t-sig'></div>" +
@@ -104,11 +104,11 @@
       D.benchmark.comparisons.map(function (c) {
         return [
           "<span class='dot " + (c.significant ? "info" : "warn") + "'></span>" +
-            esc(c.model_a) + " − " + esc(c.model_b),
+            esc(c.model_a) + " - " + esc(c.model_b),
           (c.mean_diff >= 0 ? "+" : "") + c.mean_diff.toFixed(4),
           "[" + c.ci95_low.toFixed(3) + ", " + c.ci95_high.toFixed(3) + "]",
           c.wilcoxon_p.toFixed(3),
-          c.significant ? "Consistent sign, small effect" : "Tie — CI spans zero",
+          c.significant ? "Consistent sign, small effect" : "Tie, CI spans zero",
         ];
       }),
       { align: ["", "n", "n", "n", ""] }
@@ -127,16 +127,16 @@
       values: pg.map(function (r) { return r.d; }),
       colors: pg.map(function (r) { return r.d > 0 ? C.good : C.bad; }),
       tipExtra: pg.map(function (r) {
-        return "GBT " + r.gbt.toFixed(3) + " · CNN " + r.cnn.toFixed(3) + " · n = " + r.n;
+        return "GBT " + r.gbt.toFixed(3) + " | CNN " + r.cnn.toFixed(3) + " | n = " + r.n;
       }),
-      xTitle: "Difference in Spearman (CNN − GBT)", labelWidth: 170, tickDecimals: 2,
+      xTitle: "Difference in Spearman (CNN - GBT)", labelWidth: 170, tickDecimals: 2,
     });
 
     var wins = pg.filter(function (r) { return r.d > 0; }).length;
     $("#cap-pergene", root).textContent =
       "Out-of-fold leave-one-gene-out predictions. The CNN wins on " + wins + " of " +
       pg.length + " groups and loses on " + (pg.length - wins) +
-      " — mixed signs are what a statistical tie looks like.";
+      ". Mixed signs are what a statistical tie looks like.";
   }
 
   // ---------------------------------------------------------------- scorer
@@ -158,8 +158,8 @@
 
     root.innerHTML =
       "<h2>Score a guide</h2>" +
-      "<p class='lead'>Runs the <strong>gene-held-out ensemble</strong> — the same three-seed " +
-      "model behind the 0.495 test number, not an in-sample refit — entirely in your browser, " +
+      "<p class='lead'>Runs the <strong>gene-held-out ensemble</strong>, the same three-seed " +
+      "model behind the 0.495 test number rather than an in-sample refit, entirely in your browser, " +
       "then wraps it in a split conformal interval calibrated on held-out genes.</p>" +
       "<div class='grid g32'><div class='panel'>" +
         "<div class='field'><label for='ex'>Start from</label><select id='ex'>" +
@@ -232,11 +232,11 @@
         "<div class='metrics'>" +
           "<div class='metric'><div class='v'>" + r.prediction.toFixed(3) + "</div>" +
             "<div class='l'>Predicted efficiency</div>" +
-            "<div class='s'>rank within a (gene, drug) group, 0–1</div></div>" +
-          "<div class='metric'><div class='v'>" + iv.low.toFixed(2) + " – " + iv.high.toFixed(2) + "</div>" +
+            "<div class='s'>rank within a (gene, drug) group, 0-1</div></div>" +
+          "<div class='metric'><div class='v'>" + iv.low.toFixed(2) + " - " + iv.high.toFixed(2) + "</div>" +
             "<div class='l'>" + lvl + "% conformal interval</div>" +
-            "<div class='s'>±" + iv.halfWidth.toFixed(3) + "</div></div>" +
-          "<div class='metric'><div class='v'>±" + r.seedSpread.toFixed(4) + "</div>" +
+            "<div class='s'>+/-" + iv.halfWidth.toFixed(3) + "</div></div>" +
+          "<div class='metric'><div class='v'>+/-" + r.seedSpread.toFixed(4) + "</div>" +
             "<div class='l'>Ensemble disagreement</div>" +
             "<div class='s'>spread across 3 seeds</div></div>" +
         "</div>" +
@@ -245,7 +245,7 @@
             esc(known.gene) + "</strong> (" + esc(known.drug) + "), measured activity <strong>" +
             known.y.toFixed(3) + "</strong>, ranked <strong>" + known.rank + " of " + known.group_n +
             "</strong> in its group. It was in the <strong>" + esc(known.split) + "</strong> split.</p>"
-          : "<p class='ok-line'><span class='dot info'></span>Not in the training dataset — this " +
+          : "<p class='ok-line'><span class='dot info'></span>Not in the training dataset, so this " +
             "is a genuine out-of-sample prediction.</p>") +
         (iv.halfWidth > 0.35
           ? "<div class='note warn'><span class='t'>This interval is wide</span><p>It spans " +
@@ -253,8 +253,8 @@
             "but wide enough to be useful mainly for flagging predictions not to trust rather " +
             "than for ranking individual guides.</p></div>"
           : "") +
-        "<p class='hint'>GC in protospacer " + r.gcCount + "/20 · " +
-          "Tm(30mer) " + r.thermoRaw[3].toFixed(1) + " °C · " +
+        "<p class='hint'>GC in protospacer " + r.gcCount + "/20 | " +
+          "Tm(30mer) " + r.thermoRaw[3].toFixed(1) + "  degC | " +
           "per-seed " + r.perSeed.map(function (p) { return p.toFixed(3); }).join(", ") + "</p>";
 
       window.Charts.bars(attn, {
@@ -282,7 +282,7 @@
 
       cap.textContent =
         "Computed live in your browser for this exact sequence, averaged over the three " +
-        "ensemble seeds. Orange marks the seed region (protospacer 17–20), green the PAM, " +
+        "ensemble seeds. Orange marks the seed region (protospacer 17-20), green the PAM, " +
         "blue the rest of the protospacer, grey the flanking context.";
     }
 
@@ -318,7 +318,7 @@
     root.innerHTML =
       "<h2>Guide explorer</h2>" +
       "<p class='lead'>Every guide in the dataset with its measured activity and all three " +
-      "models' <strong>out-of-fold</strong> leave-one-gene-out predictions — each made by a " +
+      "models' <strong>out-of-fold</strong> leave-one-gene-out predictions, each made by a " +
       "model that never saw that guide's gene during training.</p>" +
       "<div class='panel' style='margin-bottom:20px'><div class='row2'>" +
         "<div><label for='fg'>Gene</label><select id='fg'><option value=''>All genes</option>" +
@@ -412,7 +412,7 @@
 
       window.Charts.scatter($("#c-scatter", root), {
         points: pts, xMin: 0, xMax: 1, yMin: 0, yMax: 1, width: 560, height: 420,
-        xTitle: "Measured activity (rank, 0–1)",
+        xTitle: "Measured activity (rank, 0-1)",
         yTitle: "Out-of-fold prediction",
       });
       var label = { cnn: "CNN", gbt: "Rule Set 2 GBT", lgbm: "LightGBM" }[pick];
@@ -450,10 +450,10 @@
       "<div class='grid g2' style='margin-top:30px'>" +
         "<div><h3>Weight by region, CNN attention</h3><div id='t-region'></div>" +
           "<p class='cap'>Seed versus the rest of the protospacer, paired across guides: " +
-          "Wilcoxon p ≈ " + it.wilcoxon_p.toExponential(0) + ".</p></div>" +
+          "Wilcoxon p ~ " + it.wilcoxon_p.toExponential(0) + ".</p></div>" +
         "<div><h3>The seed-region prior holds</h3>" +
           "<p>Attention rises along the protospacer toward the PAM and peaks at the PAM's " +
-          "variable N base — consistent with Cas9 requiring PAM recognition before it " +
+          "variable N base, which is consistent with Cas9 requiring PAM recognition before it " +
           "interrogates the protospacer, and with seed-proximal mismatches being the most " +
           "disruptive.</p>" +
           "<div class='note good'><span class='t'>Independent control agrees</span>" +
@@ -485,7 +485,7 @@
       });
       $("#cap-attn", root).textContent = key === "attention_weight"
         ? "Mean attention-pooling weight over " + it.n_guides.toLocaleString() +
-          " held-out guides. Orange is the seed (protospacer 17–20), green the PAM, blue the " +
+          " held-out guides. Orange is the seed (protospacer 17-20), green the PAM, blue the " +
           "rest of the protospacer, grey the flanking context. Weights sum to 1 across positions."
         : "Order-1 position-dependent nucleotide features from the Rule Set 2 GBT, aggregated " +
           "per position and normalised to sum to 1. This model has no attention mechanism, so " +
@@ -494,9 +494,9 @@
 
     var order = ["PAM", "seed", "protospacer", "3' context", "5' context"];
     var labels = {
-      PAM: "PAM (NGG)", seed: "Seed, protospacer 17–20",
-      protospacer: "Rest of protospacer, 1–16",
-      "3' context": "3′ context (+1…+3)", "5' context": "5′ context (−4…−1)",
+      PAM: "PAM (NGG)", seed: "Seed, protospacer 17-20",
+      protospacer: "Rest of protospacer, 1-16",
+      "3' context": "3' context (+1 to +3)", "5' context": "5' context (-4 to -1)",
     };
     var means = {};
     a.forEach(function (r) {
@@ -507,7 +507,7 @@
       order.map(function (k, i) {
         var m = means[k].reduce(function (s, v) { return s + v; }, 0) / means[k].length;
         return ["<span class='dot " + (i === 0 ? "good" : i === 1 ? "warn" : "info") + "'></span>" + labels[k],
-                m.toFixed(4), (m / (1 / 30)).toFixed(2) + "×"];
+                m.toFixed(4), (m / (1 / 30)).toFixed(2) + "x"];
       }),
       { align: ["", "n", "n"] }
     );
@@ -528,7 +528,7 @@
       "<h2>Do the uncertainty intervals mean anything?</h2>" +
       "<p class='lead'><strong>Yes on exchangeable data, and conservatively on new genes.</strong> " +
       "Split conformal with absolute-residual nonconformity scores and the finite-sample " +
-      "⌈(n+1)(1−α)⌉ quantile correction.</p>" +
+      "ceil((n+1)(1-alpha)) quantile correction.</p>" +
       "<div class='chart' id='c-cal'></div>" +
       "<p class='cap'>Above the dashed diagonal is conservative (intervals wider than needed); " +
       "below is under-covering. Source: CNN + attention with " + rnd.n_cal.toLocaleString() +
@@ -541,11 +541,11 @@
       "</div>" +
       "<div class='note warn'><span class='t'>The guarantee does not formally hold under gene shift</span>" +
       "<p>Conformal requires calibration and test data to be exchangeable. Under the random " +
-      "split they are, and coverage tracks nominal almost exactly — that validates the " +
+      "split they are, and coverage tracks nominal almost exactly, which validates the " +
       "implementation. Under gene-held-out the calibration and test genes are disjoint, so the " +
       "guarantee lapses; empirically it lands conservative (" + pct(gh.coverage_at_90) +
       " at nominal 90%), which is the safe direction but is luck rather than a theorem. " +
-      "Separately, a ±" + gh.half_width_at_90.toFixed(2) + " interval on a (0, 1] target is " +
+      "Separately, a +/-" + gh.half_width_at_90.toFixed(2) + " interval on a (0, 1] target is " +
       "wide enough that these are useful for flagging low-confidence predictions, not for " +
       "ranking individual guides.</p></div>";
 
@@ -559,7 +559,7 @@
         { name: "Gene-held-out split (shifted)", color: C.bad,
           data: gh.curve.map(function (r) { return r.empirical_coverage; }) },
       ],
-      xTitle: "Nominal coverage (1 − α)", yTitle: "Empirical coverage on held-out guides",
+      xTitle: "Nominal coverage (1 - alpha)", yTitle: "Empirical coverage on held-out guides",
       yMin: 0, yMax: 1, height: 400,
     });
 
@@ -569,7 +569,7 @@
         { name: "Random split", color: C.accent, data: rnd.curve.map(function (r) { return r.mean_width; }), markers: false },
         { name: "Gene-held-out split", color: C.bad, data: gh.curve.map(function (r) { return r.mean_width; }), markers: false },
       ],
-      xTitle: "Nominal coverage (1 − α)", yTitle: "Mean interval width",
+      xTitle: "Nominal coverage (1 - alpha)", yTitle: "Mean interval width",
       yMin: 0, height: 300, width: 520,
     });
 
@@ -584,7 +584,7 @@
       [0.95, 0.9, 0.8, 0.5].map(function (l) {
         var r = at(rnd.curve, l), g = at(gh.curve, l);
         return [pct(l, 0), pct(r.empirical_coverage), pct(g.empirical_coverage),
-                "±" + (r.mean_width / 2).toFixed(3)];
+                "+/-" + (r.mean_width / 2).toFixed(3)];
       }),
       { align: ["n", "n", "n", "n"] }
     );
@@ -604,7 +604,7 @@
     root.innerHTML =
       "<h2>How the architecture was chosen</h2>" +
       "<p class='lead'>" + sw.length + " configurations, scored by leave-one-gene-out " +
-      "restricted to the <strong>training genes only</strong> — the test and calibration genes " +
+      "restricted to the <strong>training genes only</strong>. The test and calibration genes " +
       "were never loaded during the sweep, so the reported test numbers stay honest.</p>" +
       "<div class='chart' id='c-sweep'></div>" +
       "<p class='cap'>Selected configuration in blue: <code>" + esc(sel.config) + "</code> at " +
@@ -617,10 +617,10 @@
           "single most effective fix.</p>" +
           "<p><strong>Learned positional embedding (+0.010).</strong> Convolutions are " +
           "translation-equivariant, so without one the network cannot tell position 4 from " +
-          "position 20 — yet Rule Set 2 draws 58% of its Gini importance from position-specific " +
+          "position 20, yet Rule Set 2 draws 58% of its Gini importance from position-specific " +
           "nucleotide identity.</p></div>" +
         "<div class='note bad'><span class='t'>What did not work</span>" +
-          "<p><strong>Dropping gene-position features (0.377 → 0.179).</strong> The hypothesis " +
+          "<p><strong>Dropping gene-position features (0.377 down to 0.179).</strong> The hypothesis " +
           "was that percent-peptide and cut position are gene-level shortcuts that cannot " +
           "transfer across genes. Measurement said the opposite; they were kept.</p>" +
           "<p><strong>Narrowing the network.</strong> Every narrower variant scored below the " +
@@ -637,8 +637,8 @@
       values: sw.map(function (r) { return r.mean_spearman; }),
       colors: sw.map(function (r) { return r.config === sel.config ? C.accent : C.pale; }),
       tipExtra: sw.map(function (r) {
-        return "conv drop " + r.conv_dropout + " · wd " + r.weight_decay +
-               " · " + r.c1 + "/" + r.c2 + (r.positional ? " · positional" : "");
+        return "conv drop " + r.conv_dropout + " | wd " + r.weight_decay +
+               " | " + r.c1 + "/" + r.c2 + (r.positional ? " | positional" : "");
       }),
       refLines: [{ value: ref, label: "GBT, same protocol", color: C.warm }],
       xTitle: "Mean Spearman over held-out training genes",
@@ -666,13 +666,13 @@
       "<p><strong>Melting temperature on short segments is not physically meaningful.</strong> " +
       "Rule Set 2 computes Tm on 5nt and 8nt sub-segments, below the range where " +
       "nearest-neighbour thermodynamics is valid, so the 5-mer values come out negative " +
-      "(−69 to +1 °C). This is inherited from the original design, not introduced here.</p></div>";
+      "(-69 to +1  degC). This is inherited from the original design, not introduced here.</p></div>";
 
     $("#t-val", root).innerHTML = table(
       ["Check", "Observed"],
       v.map(function (c) {
         return ["<span class='dot " + (c.passed ? "good" : "bad") + "'></span>" + esc(c.check),
-                "<span style='color:var(--muted)'>" + esc(c.detail || "—") + "</span>"];
+                "<span style='color:var(--muted)'>" + esc(c.detail || "-") + "</span>"];
       }),
       { scroll: true }
     );
@@ -688,12 +688,12 @@
     root.innerHTML =
       "<h2>Dataset and splits</h2>" +
       "<div class='stats' style='margin-bottom:8px'>" +
-        "<div class='stat'><div class='v'>" + m.n_rows.toLocaleString() + "</div><div class='l'>Guide × drug rows</div></div>" +
+        "<div class='stat'><div class='v'>" + m.n_rows.toLocaleString() + "</div><div class='l'>Guide x drug rows</div></div>" +
         "<div class='stat'><div class='v'>" + m.n_unique_guides.toLocaleString() + "</div><div class='l'>Unique 30mers</div></div>" +
         "<div class='stat'><div class='v'>" + m.n_genes + "</div><div class='l'>Genes</div></div>" +
         "<div class='stat'><div class='v'>" + m.n_calibration.toLocaleString() + "</div><div class='l'>Calibration guides</div></div>" +
       "</div>" +
-      "<p class='cap'>" + esc(m.dataset) + ". Target is <code>" + esc(m.target) + "</code> — " +
+      "<p class='cap'>" + esc(m.dataset) + ". Target is <code>" + esc(m.target) + "</code>, " +
         esc(m.target_note) + ".</p>" +
       "<div class='grid g32' style='margin-top:28px'>" +
         "<div><h3>Rows per gene, coloured by split</h3><div class='chart' id='c-genes'></div>" +
@@ -705,14 +705,14 @@
           "Doench 2016 Fig. 4 reports Spearman. The paper-comparable number.</p>" +
           "<p><strong>Frozen gene-held-out 60/20/20.</strong> Whole genes to train, calibration, " +
           "and test. Needed for conformal, which requires a disjoint calibration set.</p>" +
-          "<p><strong>Random row-level.</strong> Reported only as a leakage contrast — it " +
+          "<p><strong>Random row-level.</strong> Reported only as a leakage contrast. It " +
           "inflates the GBT from 0.454 to 0.544, roughly the size of the entire effect being " +
           "measured.</p>" +
           "<div class='note good'><span class='t'>Verified against the raw source</span>" +
           "<p>The target was independently re-derived from <code>V1_data.xlsx</code> and " +
           "<code>V2_data.xlsx</code> by porting Azimuth's Python 2 rank-transform logic. " +
           "Maximum absolute difference across all " + m.n_rows.toLocaleString() +
-          " rows: <strong>5 × 10⁻¹⁰</strong>.</p></div></div>" +
+          " rows: <strong>5e-10</strong>.</p></div></div>" +
       "</div>" +
       "<h3>Chromatin accessibility channel: cut, with evidence</h3>" +
       "<div id='t-chrom'></div>" +
@@ -720,7 +720,7 @@
       "<p>A375 generated 65% of the rows and has <strong>zero</strong> chromatin accessibility " +
       "experiments on ENCODE; its only ENCODE data is RNA-based.</p>" +
       "<p>The remaining rows span three more human lines plus mouse, so a per-row match would " +
-      "need several tracks across two genomes — and TF1 has no ENCODE data at all.</p>" +
+      "need several tracks across two genomes, and TF1 has no ENCODE data at all.</p>" +
       "<p>The Azimuth release carries no genomic coordinates, only Ensembl transcript IDs and " +
       "transcript-relative cut positions, so there is nothing to query a bigWig with.</p></div>";
 
@@ -729,14 +729,14 @@
       values: gs.map(function (r) { return r.n; }),
       colors: gs.map(function (r) { return cmap[r.split]; }),
       tipExtra: gs.map(function (r) { return r.split + " split"; }),
-      xTitle: "Guide × drug rows", labelWidth: 96, rowHeight: 22,
+      xTitle: "Guide x drug rows", labelWidth: 96, rowHeight: 22,
       tipDecimals: 0, tickDecimals: 0,
     });
 
     $("#t-chrom", root).innerHTML = table(
       ["Cell line", "Rows", "ENCODE ATAC-seq / DNase-seq"],
       [
-        ["<span class='dot bad'></span>A375 (RES half)", "3,473", "0 experiments — only RNA-based data"],
+        ["<span class='dot bad'></span>A375 (RES half)", "3,473", "0 experiments, only RNA-based data"],
         ["<span class='dot warn'></span>NB4 + TF1 + MOLM-13 (FC, human)", "882", "TF1 none; NB4 1; MOLM-13 3"],
         ["<span class='dot bad'></span>Mouse lines (FC)", "955", "different genome entirely"],
       ],

@@ -83,7 +83,7 @@ def caption(text):
 def section_benchmark(d):
     st.subheader("Does the CNN beat the gradient-boosted-tree baseline?")
     st.markdown(
-        "**No — it ties under the paper's protocol and wins on the frozen test split, "
+        "**No. It ties under the paper's protocol and wins on the frozen test split, "
         "and neither result beats a tuned LightGBM on the same hand-crafted features.** "
         "On roughly 4,400 guides, a learned sequence representation buys nothing over "
         "well-chosen k-mer features."
@@ -119,25 +119,25 @@ def section_benchmark(d):
     st.plotly_chart(base_layout(fig, 420, "Evaluation protocol",
                                 "Mean per-gene Spearman"), use_container_width=True)
     caption(
-        "Error bars are ±1 SD across the 18 (gene, drug) evaluation groups. That spread "
+        "Error bars are +/-1 SD across the 18 (gene, drug) evaluation groups. That spread "
         "(~0.08) is larger than every gap between models, which is the whole story."
     )
 
     st.markdown("##### Are the differences real?")
     comp = pd.DataFrame(d["benchmark"]["comparisons"])
     show = pd.DataFrame({
-        "Comparison": comp["model_a"] + " − " + comp["model_b"],
+        "Comparison": comp["model_a"] + " - " + comp["model_b"],
         "Mean difference": comp["mean_diff"].map("{:+.4f}".format),
         "95% bootstrap CI": [f"[{lo:.3f}, {hi:.3f}]"
                              for lo, hi in zip(comp["ci95_low"], comp["ci95_high"])],
         "Wilcoxon p": comp["wilcoxon_p"].map("{:.3f}".format),
         "Verdict": np.where(comp["significant"], "Consistent sign, small effect",
-                            "Tie — CI spans zero"),
+                            "Tie, CI spans zero"),
     })
     st.dataframe(show, hide_index=True, width="stretch")
     caption(
         "Paired across the 18 evaluation groups; 10,000-sample bootstrap on the mean "
-        "difference. For LightGBM vs Rule Set 2 the two tests disagree — the sign is "
+        "difference. For LightGBM vs Rule Set 2 the two tests disagree: the sign is "
         "consistent across genes (p = 0.006) while the CI on the mean spans zero, which "
         "means reliably a little better rather than decisively better."
     )
@@ -152,15 +152,15 @@ def section_benchmark(d):
     fig = go.Figure(go.Bar(
         x=pg["delta"], y=pg["label"], orientation="h",
         marker_color=[GOOD if v > 0 else BAD for v in pg["delta"]],
-        hovertemplate="%{y}<br>CNN − GBT: %{x:+.4f}<extra></extra>",
+        hovertemplate="%{y}<br>CNN - GBT: %{x:+.4f}<extra></extra>",
     ))
     fig.add_vline(x=0, line=dict(color=INK, width=1))
-    st.plotly_chart(base_layout(fig, 440, "Difference in Spearman (CNN − GBT)",
+    st.plotly_chart(base_layout(fig, 440, "Difference in Spearman (CNN - GBT)",
                                 "", legend=False), use_container_width=True)
     caption(
         f"Out-of-fold leave-one-gene-out predictions. The CNN wins on "
         f"{int((pg.delta > 0).sum())} of {len(pg)} groups and loses on "
-        f"{int((pg.delta < 0).sum())} — mixed signs are what a statistical tie looks like."
+        f"{int((pg.delta < 0).sum())}. Mixed signs are what a statistical tie looks like."
     )
 
 
@@ -169,8 +169,8 @@ def section_scorer(d):
     defaults = warm_model()
 
     st.markdown(
-        "Runs the **gene-held-out ensemble** — the same three-seed model behind the "
-        "0.495 test number, not an in-sample refit — and wraps it in a split conformal "
+        "Runs the **gene-held-out ensemble**, the same three-seed model behind the "
+        "0.495 test number rather than an in-sample refit, and wraps it in a split conformal "
         "interval calibrated on held-out genes."
     )
 
@@ -224,9 +224,9 @@ def section_scorer(d):
     m1.metric("Predicted efficiency", f"{out['prediction']:.3f}",
               help="Rank within a (gene, drug) group scaled to (0, 1]. 0.8 means "
                    "predicted to outrank ~80% of guides against the same gene.")
-    m2.metric(f"{int(alpha*100)}% conformal interval", f"{lo:.2f} – {hi:.2f}",
-              f"±{out['half_width']:.3f}", delta_color="off")
-    m3.metric("Ensemble disagreement", f"±{out['seed_spread']:.4f}",
+    m2.metric(f"{int(alpha*100)}% conformal interval", f"{lo:.2f} - {hi:.2f}",
+              f"+/-{out['half_width']:.3f}", delta_color="off")
+    m3.metric("Ensemble disagreement", f"+/-{out['seed_spread']:.4f}",
               help="Spread across the three training seeds. This is model variance, "
                    "not the calibrated interval.")
 
@@ -239,7 +239,7 @@ def section_scorer(d):
             f"in its group. It was in the **{r['split']}** split."
         )
     else:
-        st.info("Not in the training dataset — this is a genuine out-of-sample prediction.")
+        st.info("Not in the training dataset, so this is a genuine out-of-sample prediction.")
 
     if out["half_width"] > 0.35:
         st.warning(
@@ -269,7 +269,7 @@ def section_scorer(d):
                     use_container_width=True)
     caption(
         f"GC count in the protospacer: {out['gc_count']}/20. Orange marks the seed "
-        "(protospacer 17–20), green the PAM. Averaged over the three ensemble seeds."
+        "(protospacer 17-20), green the PAM. Averaged over the three ensemble seeds."
     )
 
 
@@ -277,7 +277,7 @@ def section_explorer(d):
     st.subheader("Guide explorer")
     st.markdown(
         "Every guide in the dataset with its measured activity and all three models' "
-        "**out-of-fold** leave-one-gene-out predictions — each one made by a model that "
+        "**out-of-fold** leave-one-gene-out predictions, each one made by a model that "
         "never saw that guide's gene during training."
     )
 
@@ -324,7 +324,7 @@ def section_explorer(d):
     ))
     fig.add_shape(type="line", x0=0, y0=0, x1=1, y1=1,
                   line=dict(color=MUTED, width=1, dash="dash"))
-    st.plotly_chart(base_layout(fig, 420, "Measured activity (rank, 0–1)",
+    st.plotly_chart(base_layout(fig, 420, "Measured activity (rank, 0-1)",
                                 f"{which} out-of-fold prediction", legend=False),
                     use_container_width=True)
     caption(
@@ -368,7 +368,7 @@ def section_attention(d):
         use_container_width=True,
     )
     caption(
-        "Mean over 1,066 held-out guides. Orange is the seed (protospacer 17–20), "
+        "Mean over 1,066 held-out guides. Orange is the seed (protospacer 17-20), "
         "green the PAM, blue the rest of the protospacer."
         if is_cnn else
         "Order-1 position-dependent nucleotide features, aggregated per position and "
@@ -383,10 +383,10 @@ def section_attention(d):
         )
         st.dataframe(
             pd.DataFrame({
-                "Region": ["PAM (NGG)", "Seed (protospacer 17–20)",
-                           "Rest of protospacer (1–16)", "3′ context", "5′ context"],
+                "Region": ["PAM (NGG)", "Seed (protospacer 17-20)",
+                           "Rest of protospacer (1-16)", "3' context", "5' context"],
                 "Mean weight": rows.map("{:.4f}".format).values,
-                "vs uniform": (rows / (1 / 30)).map("{:.2f}×".format).values,
+                "vs uniform": (rows / (1 / 30)).map("{:.2f}x".format).values,
             }),
             hide_index=True, width="stretch",
         )
@@ -394,10 +394,10 @@ def section_attention(d):
         st.markdown("##### The seed-region prior holds")
         st.markdown(
             f"Attention rises along the protospacer toward the PAM and peaks at the "
-            f"PAM's variable N base — consistent with Cas9 requiring PAM recognition "
+            f"PAM's variable N base, which is consistent with Cas9 requiring PAM recognition "
             f"before it interrogates the protospacer.\n\n"
             f"Seed versus the rest of the protospacer, paired across guides: "
-            f"**Wilcoxon p ≈ {interp['wilcoxon_p']:.0e}**."
+            f"**Wilcoxon p ~ {interp['wilcoxon_p']:.0e}**."
         )
         st.success(
             "**Independent control agrees.** Attention weights are easy to over-read, so "
@@ -412,7 +412,7 @@ def section_calibration(d):
     st.subheader("Do the uncertainty intervals mean anything?")
     st.markdown(
         "**Yes on exchangeable data, and conservatively on new genes.** Split conformal "
-        "with absolute-residual scores and the finite-sample ⌈(n+1)(1−α)⌉ quantile."
+        "with absolute-residual scores and the finite-sample ceil((n+1)(1-alpha)) quantile."
     )
     conf = d["conformal"]
 
@@ -426,8 +426,8 @@ def section_calibration(d):
         c = pd.DataFrame(conf[key]["curve"])
         fig.add_scatter(x=c["nominal_coverage"], y=c["empirical_coverage"], mode="lines+markers",
                         name=name, line=dict(color=color, width=2), marker=dict(size=5),
-                        hovertemplate=name + "<br>nominal %{x:.2f} → empirical %{y:.3f}<extra></extra>")
-    st.plotly_chart(base_layout(fig, 420, "Nominal coverage (1 − α)",
+                        hovertemplate=name + "<br>nominal %{x:.2f}, empirical %{y:.3f}<extra></extra>")
+    st.plotly_chart(base_layout(fig, 420, "Nominal coverage (1 - alpha)",
                                 "Empirical coverage on held-out guides"),
                     use_container_width=True)
     caption(
@@ -450,7 +450,7 @@ def section_calibration(d):
                 "Nominal": f"{lvl:.0%}",
                 "Random": f"{r['empirical_coverage']:.1%}",
                 "Gene-held": f"{gq['empirical_coverage']:.1%}",
-                "Half-width (random)": f"±{r['mean_width']/2:.3f}",
+                "Half-width (random)": f"+/-{r['mean_width']/2:.3f}",
             })
         st.dataframe(pd.DataFrame(rows), hide_index=True, width="stretch")
     with c2:
@@ -463,16 +463,16 @@ def section_calibration(d):
             c = pd.DataFrame(conf[key]["curve"])
             fig.add_scatter(x=c["nominal_coverage"], y=c["mean_width"], mode="lines",
                             name=name, line=dict(color=color, width=2))
-        st.plotly_chart(base_layout(fig, 260, "Nominal coverage (1 − α)",
+        st.plotly_chart(base_layout(fig, 260, "Nominal coverage (1 - alpha)",
                                     "Mean interval width"), use_container_width=True)
 
     st.warning(
         "**The guarantee does not formally hold under gene shift.** Conformal requires "
         "calibration and test data to be exchangeable. Under the random split they are, "
-        "and coverage tracks nominal almost exactly — that validates the implementation. "
+        "and coverage tracks nominal almost exactly, which validates the implementation. "
         "Under gene-held-out the genes are disjoint, so the guarantee lapses; empirically "
         "it lands conservative (93.4% at nominal 90%), which is the safe direction but is "
-        "luck rather than a theorem. Separately, a ±0.42 interval on a (0, 1] target is "
+        "luck rather than a theorem. Separately, a +/-0.42 interval on a (0, 1] target is "
         "wide enough that these are useful for flagging low-confidence predictions, not "
         "for ranking individual guides."
     )
@@ -518,12 +518,12 @@ def section_data(d):
     m = d["meta"]
     st.subheader("Dataset and splits")
     c1, c2, c3, c4 = st.columns(4)
-    c1.metric("Guide × drug rows", f"{m['n_rows']:,}")
+    c1.metric("Guide x drug rows", f"{m['n_rows']:,}")
     c2.metric("Unique 30mers", f"{m['n_unique_guides']:,}")
     c3.metric("Genes", m["n_genes"])
     c4.metric("Calibration guides", f"{m['n_calibration']:,}")
     caption(
-        f"{m['dataset']}. Target is `{m['target']}` — {m['target_note']}."
+        f"{m['dataset']}. Target is `{m['target']}`, {m['target_note']}."
     )
 
     c1, c2 = st.columns([1, 1])
@@ -538,7 +538,7 @@ def section_data(d):
                         marker_color=cmap[sp],
                         hovertemplate="%{y}: %{x} rows (" + sp + ")<extra></extra>")
         fig.update_layout(barmode="stack")
-        st.plotly_chart(base_layout(fig, 420, "Guide × drug rows", ""),
+        st.plotly_chart(base_layout(fig, 420, "Guide x drug rows", ""),
                         use_container_width=True)
         caption(
             "MED12 alone is 35% of all rows, so genes are assigned largest-first to "
@@ -551,7 +551,7 @@ def section_data(d):
             "Fig. 4 reports Spearman. This is the paper-comparable number.\n\n"
             "**Frozen gene-held-out 60/20/20.** Whole genes to train / calibration / test. "
             "Needed for conformal, which requires a disjoint calibration set.\n\n"
-            "**Random row-level.** Reported only as a leakage contrast — it inflates the "
+            "**Random row-level.** Reported only as a leakage contrast. It inflates the "
             "GBT from 0.454 to 0.544, which is roughly the size of the entire effect "
             "being measured."
         )
@@ -559,7 +559,7 @@ def section_data(d):
             "**Verified against the raw source, not assumed.** The target was independently "
             "re-derived from `V1_data.xlsx` and `V2_data.xlsx` by porting Azimuth's "
             "Python 2 rank-transform logic. Maximum absolute difference across all 5,310 "
-            "rows: **5 × 10⁻¹⁰**."
+            "rows: **5e-10**."
         )
 
     st.markdown("##### Chromatin accessibility channel: cut, with evidence")
@@ -567,7 +567,7 @@ def section_data(d):
     st.dataframe(
         pd.DataFrame([
             {"Cell line": "A375 (RES half)", "Rows": "3,473",
-             "ENCODE ATAC-seq / DNase-seq": "0 experiments — only RNA-based data"},
+             "ENCODE ATAC-seq / DNase-seq": "0 experiments, only RNA-based data"},
             {"Cell line": "NB4 + TF1 + MOLM-13 (FC, human)", "Rows": "882",
              "ENCODE ATAC-seq / DNase-seq": "TF1 none; NB4 1; MOLM-13 3"},
             {"Cell line": "Mouse lines (FC)", "Rows": "955",
@@ -580,8 +580,8 @@ def section_data(d):
         "rows and has zero chromatin accessibility experiments on ENCODE. The remaining "
         "rows span three more human lines plus mouse, so a per-row match would need "
         "several tracks across two genomes. And the Azimuth release carries no genomic "
-        "coordinates — only Ensembl transcript IDs and transcript-relative cut positions "
-        "— so there is nothing to query a bigWig with."
+        "coordinates, only Ensembl transcript IDs and transcript-relative cut positions, "
+        "so there is nothing to query a bigWig with."
     )
     with st.expander("Raw ENCODE query results"):
         st.json(ch)
@@ -606,7 +606,7 @@ def section_selection(d):
                                 "", legend=False), use_container_width=True)
     caption(
         f"{len(sw)} configurations, scored by leave-one-gene-out restricted to the "
-        "training genes — the test and calibration genes were never loaded during the "
+        "training genes. The test and calibration genes were never loaded during the "
         f"sweep, so the reported test numbers stay honest. Selected: **{sel}** (blue)."
     )
 
@@ -617,13 +617,13 @@ def section_selection(d):
         "training Spearman against 0.21 held-out. `Dropout1d` was the single most "
         "effective fix.\n\n"
         "*Learned positional embedding (+0.010).* Convolutions are translation-"
-        "equivariant, so without one the network cannot tell position 4 from position 20 "
-        "— yet Rule Set 2 draws 58% of its Gini importance from position-specific "
+        "equivariant, so without one the network cannot tell position 4 from position 20, "
+        "yet Rule Set 2 draws 58% of its Gini importance from position-specific "
         "nucleotide identity."
     )
     c2.error(
         "**What did not work.**\n\n"
-        "*Dropping gene-position features (0.377 → 0.179).* The hypothesis was that "
+        "*Dropping gene-position features (0.377 down to 0.179).* The hypothesis was that "
         "percent-peptide and cut position are gene-level shortcuts that cannot transfer "
         "across genes. Measurement said the opposite; they were kept.\n\n"
         "*Narrowing the network.* Every narrower variant scored below the 64/128 stack. "
@@ -678,8 +678,8 @@ def main():
         st.metric("CNN, LOGO Spearman", "0.507")
         st.metric("CNN, gene-held-out test", "0.495")
         st.caption(
-            f"Doench et al. 2016 · {d['meta']['n_rows']:,} guide × drug rows · "
-            f"{d['meta']['n_genes']} genes · {len(d['validation'])} validation checks"
+            f"Doench et al. 2016 | {d['meta']['n_rows']:,} guide x drug rows | "
+            f"{d['meta']['n_genes']} genes | {len(d['validation'])} validation checks"
         )
 
     st.title("CRISPR On-Target Efficiency")
