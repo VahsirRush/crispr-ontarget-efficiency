@@ -1,0 +1,520 @@
+{
+  "RANDOM split (exchangeable)": {
+    "n_cal": 1016,
+    "n_test": 1103,
+    "mean_abs_gap": 0.034551701102257006,
+    "max_abs_gap": 0.06237533998186762,
+    "coverage_at_90": 0.9020852221214869,
+    "half_width_at_90": 0.37809649109840393,
+    "curve": [
+      {
+        "alpha": 0.05,
+        "nominal_coverage": 0.95,
+        "q": 0.4447790856454925,
+        "empirical_coverage": 0.9401631912964642,
+        "mean_width": 0.8251768350601196,
+        "n_cal": 1016,
+        "n_test": 1103
+      },
+      {
+        "alpha": 0.1,
+        "nominal_coverage": 0.9,
+        "q": 0.39433700964619445,
+        "empirical_coverage": 0.9020852221214869,
+        "mean_width": 0.7561929821968079,
+        "n_cal": 1016,
+        "n_test": 1103
+      },
+      {
+        "alpha": 0.15,
+        "nominal_coverage": 0.85,
+        "q": 0.34939478134706115,
+        "empirical_coverage": 0.8386219401631912,
+        "mean_width": 0.6833721995353699,
+        "n_cal": 1016,
+        "n_test": 1103
+      },
+      {
+        "alpha": 0.2,
+        "nominal_coverage": 0.8,
+        "q": 0.3144463977974854,
+        "empirical_coverage": 0.7660924750679964,
+        "mean_width": 0.6205971837043762,
+        "n_cal": 1016,
+        "n_test": 1103
+      },
+      {
+        "alpha": 0.25,
+        "nominal_coverage": 0.75,
+        "q": 0.2884940648767853,
+        "empirical_coverage": 0.71441523118767,
+        "mean_width": 0.5717232823371887,
+        "n_cal": 1016,
+        "n_test": 1103
+      },
+      {
+        "alpha": 0.3,
+        "nominal_coverage": 0.7,
+        "q": 0.2633305576595001,
+        "empirical_coverage": 0.6563916591115141,
+        "mean_width": 0.5234098434448242,
+        "n_cal": 1016,
+        "n_test": 1103
+      },
+      {
+        "alpha": 0.35,
+        "nominal_coverage": 0.65,
+        "q": 0.24033872380775456,
+        "empirical_coverage": 0.5911151405258386,
+        "mean_width": 0.4787124991416931,
+        "n_cal": 1016,
+        "n_test": 1103
+      },
+      {
+        "alpha": 0.4,
+        "nominal_coverage": 0.6,
+        "q": 0.21623513102531433,
+        "empirical_coverage": 0.5376246600181324,
+        "mean_width": 0.4313793182373047,
+        "n_cal": 1016,
+        "n_test": 1103
+      },
+      {
+        "alpha": 0.45,
+        "nominal_coverage": 0.55,
+        "q": 0.19500203712886055,
+        "empirical_coverage": 0.4877606527651859,
+        "mean_width": 0.3893885016441345,
+        "n_cal": 1016,
+        "n_test": 1103
+      },
+      {
+        "alpha": 0.5,
+        "nominal_coverage": 0.5,
+        "q": 0.17486565567633056,
+        "empirical_coverage": 0.43880326382592927,
+        "mean_width": 0.34942173957824707,
+        "n_cal": 1016,
+        "n_test": 1103
+      },
+      {
+        "alpha": 0.55,
+        "nominal_coverage": 0.44999999999999996,
+        "q": 0.15480193089633176,
+        "empirical_coverage": 0.3943789664551224,
+        "mean_width": 0.3094522953033447,
+        "n_cal": 1016,
+        "n_test": 1103
+      },
+      {
+        "alpha": 0.6,
+        "nominal_coverage": 0.4,
+        "q": 0.13925906778388975,
+        "empirical_coverage": 0.357207615593835,
+        "mean_width": 0.27842625975608826,
+        "n_cal": 1016,
+        "n_test": 1103
+      },
+      {
+        "alpha": 0.65,
+        "nominal_coverage": 0.35,
+        "q": 0.12332193960049431,
+        "empirical_coverage": 0.3182230281051677,
+        "mean_width": 0.24660709500312805,
+        "n_cal": 1016,
+        "n_test": 1103
+      },
+      {
+        "alpha": 0.7,
+        "nominal_coverage": 0.30000000000000004,
+        "q": 0.10537022231167603,
+        "empirical_coverage": 0.27379873073436084,
+        "mean_width": 0.21074044704437256,
+        "n_cal": 1016,
+        "n_test": 1103
+      },
+      {
+        "alpha": 0.75,
+        "nominal_coverage": 0.25,
+        "q": 0.08842532156555177,
+        "empirical_coverage": 0.2184950135992747,
+        "mean_width": 0.17685064673423767,
+        "n_cal": 1016,
+        "n_test": 1103
+      },
+      {
+        "alpha": 0.8,
+        "nominal_coverage": 0.19999999999999996,
+        "q": 0.06918294700311278,
+        "empirical_coverage": 0.1659111514052584,
+        "mean_width": 0.13836587965488434,
+        "n_cal": 1016,
+        "n_test": 1103
+      },
+      {
+        "alpha": 0.85,
+        "nominal_coverage": 0.15000000000000002,
+        "q": 0.05374704217523196,
+        "empirical_coverage": 0.128739800543971,
+        "mean_width": 0.10749410092830658,
+        "n_cal": 1016,
+        "n_test": 1103
+      },
+      {
+        "alpha": 0.9,
+        "nominal_coverage": 0.09999999999999998,
+        "q": 0.03540991185955811,
+        "empirical_coverage": 0.08250226654578423,
+        "mean_width": 0.07081984728574753,
+        "n_cal": 1016,
+        "n_test": 1103
+      },
+      {
+        "alpha": 0.95,
+        "nominal_coverage": 0.050000000000000044,
+        "q": 0.015570875158020026,
+        "empirical_coverage": 0.03535811423390753,
+        "mean_width": 0.03114175610244274,
+        "n_cal": 1016,
+        "n_test": 1103
+      }
+    ]
+  },
+  "GENE-HELD split (shifted)": {
+    "n_cal": 1059,
+    "n_test": 1066,
+    "mean_abs_gap": 0.011148415127875975,
+    "max_abs_gap": 0.03433395872420264,
+    "coverage_at_90": 0.9343339587242027,
+    "half_width_at_90": 0.40395569801330566,
+    "curve": [
+      {
+        "alpha": 0.05,
+        "nominal_coverage": 0.95,
+        "q": 0.46590167024298096,
+        "empirical_coverage": 0.9662288930581614,
+        "mean_width": 0.8697499632835388,
+        "n_cal": 1059,
+        "n_test": 1066
+      },
+      {
+        "alpha": 0.1,
+        "nominal_coverage": 0.9,
+        "q": 0.41944663664505005,
+        "empirical_coverage": 0.9343339587242027,
+        "mean_width": 0.8079113960266113,
+        "n_cal": 1059,
+        "n_test": 1066
+      },
+      {
+        "alpha": 0.15,
+        "nominal_coverage": 0.85,
+        "q": 0.3768184701156311,
+        "empirical_coverage": 0.8667917448405253,
+        "mean_width": 0.7397308349609375,
+        "n_cal": 1059,
+        "n_test": 1066
+      },
+      {
+        "alpha": 0.2,
+        "nominal_coverage": 0.8,
+        "q": 0.3473345863088379,
+        "empirical_coverage": 0.8180112570356473,
+        "mean_width": 0.6877093315124512,
+        "n_cal": 1059,
+        "n_test": 1066
+      },
+      {
+        "alpha": 0.25,
+        "nominal_coverage": 0.75,
+        "q": 0.3190130651665649,
+        "empirical_coverage": 0.7598499061913696,
+        "mean_width": 0.6347016096115112,
+        "n_cal": 1059,
+        "n_test": 1066
+      },
+      {
+        "alpha": 0.3,
+        "nominal_coverage": 0.7,
+        "q": 0.2972862824439087,
+        "empirical_coverage": 0.7120075046904315,
+        "mean_width": 0.5928183197975159,
+        "n_cal": 1059,
+        "n_test": 1066
+      },
+      {
+        "alpha": 0.35,
+        "nominal_coverage": 0.65,
+        "q": 0.2811737232366943,
+        "empirical_coverage": 0.6754221388367729,
+        "mean_width": 0.5612958669662476,
+        "n_cal": 1059,
+        "n_test": 1066
+      },
+      {
+        "alpha": 0.4,
+        "nominal_coverage": 0.6,
+        "q": 0.2552837889958497,
+        "empirical_coverage": 0.6097560975609756,
+        "mean_width": 0.5101880431175232,
+        "n_cal": 1059,
+        "n_test": 1066
+      },
+      {
+        "alpha": 0.45,
+        "nominal_coverage": 0.55,
+        "q": 0.2300296922636108,
+        "empirical_coverage": 0.5440900562851783,
+        "mean_width": 0.4599488377571106,
+        "n_cal": 1059,
+        "n_test": 1066
+      },
+      {
+        "alpha": 0.5,
+        "nominal_coverage": 0.5,
+        "q": 0.20479524702731322,
+        "empirical_coverage": 0.4831144465290807,
+        "mean_width": 0.40958237648010254,
+        "n_cal": 1059,
+        "n_test": 1066
+      },
+      {
+        "alpha": 0.55,
+        "nominal_coverage": 0.44999999999999996,
+        "q": 0.18558881423461915,
+        "empirical_coverage": 0.44090056285178236,
+        "mean_width": 0.37117764353752136,
+        "n_cal": 1059,
+        "n_test": 1066
+      },
+      {
+        "alpha": 0.6,
+        "nominal_coverage": 0.4,
+        "q": 0.16742367561351013,
+        "empirical_coverage": 0.39399624765478425,
+        "mean_width": 0.3348473906517029,
+        "n_cal": 1059,
+        "n_test": 1066
+      },
+      {
+        "alpha": 0.65,
+        "nominal_coverage": 0.35,
+        "q": 0.1475413730517578,
+        "empirical_coverage": 0.35365853658536583,
+        "mean_width": 0.2950827479362488,
+        "n_cal": 1059,
+        "n_test": 1066
+      },
+      {
+        "alpha": 0.7,
+        "nominal_coverage": 0.30000000000000004,
+        "q": 0.12520600410769656,
+        "empirical_coverage": 0.300187617260788,
+        "mean_width": 0.2504119873046875,
+        "n_cal": 1059,
+        "n_test": 1066
+      },
+      {
+        "alpha": 0.75,
+        "nominal_coverage": 0.25,
+        "q": 0.10182765649468994,
+        "empirical_coverage": 0.24859287054409004,
+        "mean_width": 0.20365530252456665,
+        "n_cal": 1059,
+        "n_test": 1066
+      },
+      {
+        "alpha": 0.8,
+        "nominal_coverage": 0.19999999999999996,
+        "q": 0.0832420649995117,
+        "empirical_coverage": 0.20356472795497185,
+        "mean_width": 0.16648410260677338,
+        "n_cal": 1059,
+        "n_test": 1066
+      },
+      {
+        "alpha": 0.85,
+        "nominal_coverage": 0.15000000000000002,
+        "q": 0.0599044661283874,
+        "empirical_coverage": 0.13133208255159476,
+        "mean_width": 0.11980891972780228,
+        "n_cal": 1059,
+        "n_test": 1066
+      },
+      {
+        "alpha": 0.9,
+        "nominal_coverage": 0.09999999999999998,
+        "q": 0.040684617635284415,
+        "empirical_coverage": 0.09662288930581614,
+        "mean_width": 0.08136925101280212,
+        "n_cal": 1059,
+        "n_test": 1066
+      },
+      {
+        "alpha": 0.95,
+        "nominal_coverage": 0.050000000000000044,
+        "q": 0.021984097999359187,
+        "empirical_coverage": 0.05065666041275797,
+        "mean_width": 0.04396820068359375,
+        "n_cal": 1059,
+        "n_test": 1066
+      }
+    ]
+  },
+  "RANDOM split, Mondrian": {
+    "curve": [
+      {
+        "alpha": 0.05,
+        "nominal_coverage": 0.95,
+        "empirical_coverage": 0.9456029011786038,
+        "mean_width": 0.8396023761545217,
+        "n_test": 1103,
+        "n_groups": 17
+      },
+      {
+        "alpha": 0.1,
+        "nominal_coverage": 0.9,
+        "empirical_coverage": 0.8975521305530372,
+        "mean_width": 0.7483161379830575,
+        "n_test": 1103,
+        "n_groups": 17
+      },
+      {
+        "alpha": 0.15,
+        "nominal_coverage": 0.85,
+        "empirical_coverage": 0.8449682683590208,
+        "mean_width": 0.6914168190977731,
+        "n_test": 1103,
+        "n_groups": 17
+      },
+      {
+        "alpha": 0.2,
+        "nominal_coverage": 0.8,
+        "empirical_coverage": 0.7815049864007253,
+        "mean_width": 0.6298325677838849,
+        "n_test": 1103,
+        "n_groups": 17
+      },
+      {
+        "alpha": 0.25,
+        "nominal_coverage": 0.75,
+        "empirical_coverage": 0.7325475974614687,
+        "mean_width": 0.5806004929737081,
+        "n_test": 1103,
+        "n_groups": 17
+      },
+      {
+        "alpha": 0.3,
+        "nominal_coverage": 0.7,
+        "empirical_coverage": 0.6627379873073436,
+        "mean_width": 0.5322657954336185,
+        "n_test": 1103,
+        "n_groups": 17
+      },
+      {
+        "alpha": 0.35,
+        "nominal_coverage": 0.65,
+        "empirical_coverage": 0.5974614687216682,
+        "mean_width": 0.48427218647297143,
+        "n_test": 1103,
+        "n_groups": 17
+      },
+      {
+        "alpha": 0.4,
+        "nominal_coverage": 0.6,
+        "empirical_coverage": 0.5403445149592022,
+        "mean_width": 0.4401489147141319,
+        "n_test": 1103,
+        "n_groups": 17
+      },
+      {
+        "alpha": 0.45,
+        "nominal_coverage": 0.55,
+        "empirical_coverage": 0.4959202175883953,
+        "mean_width": 0.39950298679382934,
+        "n_test": 1103,
+        "n_groups": 17
+      },
+      {
+        "alpha": 0.5,
+        "nominal_coverage": 0.5,
+        "empirical_coverage": 0.4514959202175884,
+        "mean_width": 0.35911412035889334,
+        "n_test": 1103,
+        "n_groups": 17
+      },
+      {
+        "alpha": 0.55,
+        "nominal_coverage": 0.44999999999999996,
+        "empirical_coverage": 0.40344514959202177,
+        "mean_width": 0.32251767861443226,
+        "n_test": 1103,
+        "n_groups": 17
+      },
+      {
+        "alpha": 0.6,
+        "nominal_coverage": 0.4,
+        "empirical_coverage": 0.36627379873073435,
+        "mean_width": 0.28535305102738273,
+        "n_test": 1103,
+        "n_groups": 17
+      },
+      {
+        "alpha": 0.65,
+        "nominal_coverage": 0.35,
+        "empirical_coverage": 0.3345421577515866,
+        "mean_width": 0.2548258721774422,
+        "n_test": 1103,
+        "n_groups": 17
+      },
+      {
+        "alpha": 0.7,
+        "nominal_coverage": 0.30000000000000004,
+        "empirical_coverage": 0.2692656391659112,
+        "mean_width": 0.21258099470371997,
+        "n_test": 1103,
+        "n_groups": 17
+      },
+      {
+        "alpha": 0.75,
+        "nominal_coverage": 0.25,
+        "empirical_coverage": 0.22212148685403446,
+        "mean_width": 0.17740909856552442,
+        "n_test": 1103,
+        "n_groups": 17
+      },
+      {
+        "alpha": 0.8,
+        "nominal_coverage": 0.19999999999999996,
+        "empirical_coverage": 0.1686310063463282,
+        "mean_width": 0.14474217543684129,
+        "n_test": 1103,
+        "n_groups": 17
+      },
+      {
+        "alpha": 0.85,
+        "nominal_coverage": 0.15000000000000002,
+        "empirical_coverage": 0.13236627379873073,
+        "mean_width": 0.11031340861039494,
+        "n_test": 1103,
+        "n_groups": 17
+      },
+      {
+        "alpha": 0.9,
+        "nominal_coverage": 0.09999999999999998,
+        "empirical_coverage": 0.08340888485947416,
+        "mean_width": 0.07093342066027312,
+        "n_test": 1103,
+        "n_groups": 17
+      },
+      {
+        "alpha": 0.95,
+        "nominal_coverage": 0.050000000000000044,
+        "empirical_coverage": 0.043517679057116954,
+        "mean_width": 0.039856247543099785,
+        "n_test": 1103,
+        "n_groups": 17
+      }
+    ]
+  }
+}

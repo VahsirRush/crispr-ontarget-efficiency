@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Fetched by scripts/fetch_azimuth.sh, not redistributed here.
+_azimuth_src/
+azimuth.tar.gz
+
+# Derived feature matrices, ~16 MB, rebuilt in about 5 seconds by
+# scripts/01_build_dataset.py. Everything else under artifacts/ is committed so
+# a fresh clone can run the dashboards and the benchmark without retraining.
+artifacts/X_rs2.npy
+artifacts/X_onehot.npy
+artifacts/X_thermo.npy
+artifacts/*.log

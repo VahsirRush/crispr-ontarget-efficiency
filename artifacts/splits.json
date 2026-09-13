@@ -1,0 +1,41 @@
+{
+  "strategy": "gene-held-out (primary); leave-one-gene-out CV for the paper-comparable benchmark; random split reported only as a leakage contrast",
+  "gene_assignment": {
+    "MED12": "train",
+    "NF1": "train",
+    "CD13": "cal",
+    "CD15": "test",
+    "CD45": "test",
+    "CD5": "cal",
+    "NF2": "train",
+    "TADA2B": "test",
+    "H2-K": "train",
+    "CD33": "cal",
+    "CUL3": "test",
+    "CCDC101": "cal",
+    "CD43": "train",
+    "TADA1": "test",
+    "CD28": "test",
+    "HPRT1": "train",
+    "THY1": "cal"
+  },
+  "thermo_feature_names": [
+    "gc_count",
+    "gc_above_10",
+    "gc_below_10",
+    "tm_global",
+    "tm_5mer_pam_proximal",
+    "tm_8mer_middle",
+    "tm_5mer_start",
+    "percent_peptide",
+    "aa_cut_position",
+    "percent_peptide_lt50"
+  ],
+  "verification": {
+    "n_csv": 5310,
+    "n_rebuilt": 5314,
+    "n_matched": 5310,
+    "max_abs_diff": 4.981950407767499e-10,
+    "pearson": 1.0
+  }
+}

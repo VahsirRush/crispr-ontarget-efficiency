@@ -1,0 +1,104 @@
+{
+  "cell_lines": {
+    "A375": {
+      "dataset": "RES",
+      "rows": 3473,
+      "n_accessibility_experiments": 0,
+      "accessibility_accessions": [],
+      "all_assays": [
+        "RAMPAGE",
+        "small RNA-seq",
+        "total RNA-seq"
+      ]
+    },
+    "NB4": {
+      "dataset": "FC",
+      "rows": 609,
+      "n_accessibility_experiments": 1,
+      "accessibility_accessions": [
+        [
+          "ENCSR000EPL",
+          "DNase-seq"
+        ]
+      ],
+      "all_assays": [
+        "ChIA-PET",
+        "Control ChIP-seq",
+        "DNAme array",
+        "DNase-seq",
+        "Histone ChIP-seq",
+        "RNA microarray",
+        "RRBS",
+        "TF ChIP-seq",
+        "genotyping array"
+      ]
+    },
+    "TF1": {
+      "dataset": "FC",
+      "rows": 609,
+      "n_accessibility_experiments": 0,
+      "accessibility_accessions": [],
+      "all_assays": []
+    },
+    "MOLM-13": {
+      "dataset": "FC",
+      "rows": 427,
+      "n_accessibility_experiments": 3,
+      "accessibility_accessions": [
+        [
+          "ENCSR165WVZ",
+          "DNase-seq"
+        ],
+        [
+          "ENCSR562UWH",
+          "DNase-seq"
+        ],
+        [
+          "ENCSR446NCL",
+          "DNase-seq"
+        ]
+      ],
+      "all_assays": [
+        "DNase-seq"
+      ]
+    }
+  },
+  "coordinates": {
+    "v1_columns": [
+      "30mer",
+      "Strand",
+      "Transcript",
+      "CutSite",
+      "Annotation",
+      "MOLM13 CD15",
+      "MOLM13 CD33",
+      "NB4 CD33",
+      "TF1 CD33",
+      "NB4 CD13",
+      "TF1 CD13"
+    ],
+    "v2_columns": [
+      "30mer",
+      "Strand",
+      "Transcript",
+      "Amino Acid Cut position",
+      "Percent Peptide",
+      "Annotation",
+      "sgRNA Score",
+      "Low Flag",
+      "AZD_200nM",
+      "6TG_2ug/mL",
+      "PLX_2uM"
+    ],
+    "has_genomic_coordinates": false,
+    "note": "transcript-relative only (Ensembl ENST + CutSite / AA position)"
+  },
+  "decision": {
+    "outcome": "CUT",
+    "reasons": [
+      "A375 generated 65% of the rows (the whole RES half) and has 0 ATAC-seq/DNase-seq experiments on ENCODE. Its only ENCODE data is RNA-based (['RAMPAGE', 'small RNA-seq', 'total RNA-seq']), so no matched accessibility track exists for the majority of the dataset.",
+      "The remaining rows come from three further human lines plus mouse lines, so even a per-row match would need several tracks across two genomes, and TF1 has no accessibility data either.",
+      "The Azimuth release carries no genomic coordinates -- only Ensembl transcript IDs and cut positions within the transcript -- so there is nothing to query a bigWig with without a separate transcript-to-genome mapping step."
+    ]
+  }
+}

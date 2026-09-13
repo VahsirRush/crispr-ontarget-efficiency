@@ -1,0 +1,46 @@
+{
+  "geneheld_cnn": {
+    "label": "GENE-HELD  CNN+attention",
+    "n": 1066,
+    "n_gene_groups": 6,
+    "spearman_pooled": 0.47150915166400886,
+    "spearman_per_gene_mean": 0.49501782057896415,
+    "spearman_per_gene_sd": 0.06728126311175217,
+    "pearson": 0.4848974922550737,
+    "rmse": 0.25426387786865234
+  },
+  "random_cnn": {
+    "label": "RANDOM  CNN+attention",
+    "n": 1103,
+    "n_gene_groups": 18,
+    "spearman_pooled": 0.49167625303717627,
+    "spearman_per_gene_mean": 0.4828640354647671,
+    "spearman_per_gene_sd": 0.13594159560025298,
+    "pearson": 0.49884475692351965,
+    "rmse": 0.2522403299808502
+  },
+  "logo_cnn": {
+    "label": "LOGO  CNN+attention",
+    "n": 5310,
+    "n_gene_groups": 18,
+    "spearman_pooled": 0.4865233556057544,
+    "spearman_per_gene_mean": 0.5073055690454501,
+    "spearman_per_gene_sd": 0.07652616331943296,
+    "pearson": 0.4912212681595854,
+    "rmse": 0.25048150648340745
+  },
+  "_config": {
+    "name": "+ pos emb, conv drop 0.35, wd 1e-3",
+    "c1": 64,
+    "c2": 128,
+    "attn_dim": 64,
+    "dropout": 0.3,
+    "conv_dropout": 0.35,
+    "weight_decay": 0.001,
+    "lr": 0.001,
+    "epochs": 80,
+    "patience": 15,
+    "thermo": "all",
+    "positional": true
+  }
+}

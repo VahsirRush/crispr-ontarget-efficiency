@@ -1,0 +1,62 @@
+{
+  "azimuth_shipped": {
+    "label": "Azimuth shipped predictions",
+    "n": 5310,
+    "n_gene_groups": 18,
+    "spearman_pooled": 0.714791702845789,
+    "spearman_per_gene_mean": 0.693808900351293,
+    "spearman_per_gene_sd": 0.06087538067621136,
+    "pearson": 0.7123912088939232,
+    "rmse": 0.21061281109607946
+  },
+  "logo_Rule Set 2 GBT (Azimuth params)": {
+    "label": "LOGO  Rule Set 2 GBT (Azimuth params)",
+    "n": 5310,
+    "n_gene_groups": 18,
+    "spearman_pooled": 0.4969151614138249,
+    "spearman_per_gene_mean": 0.5148133182263752,
+    "spearman_per_gene_sd": 0.08207367564282766,
+    "pearson": 0.49968052420079284,
+    "rmse": 0.24930884400598957
+  },
+  "logo_LightGBM (same features)": {
+    "label": "LOGO  LightGBM (same features)",
+    "n": 5310,
+    "n_gene_groups": 18,
+    "spearman_pooled": 0.5160740435509722,
+    "spearman_per_gene_mean": 0.5378147677420931,
+    "spearman_per_gene_sd": 0.09317555106898784,
+    "pearson": 0.5197419635181196,
+    "rmse": 0.24647651169044957
+  },
+  "geneheld_Rule Set 2 GBT": {
+    "label": "GENE-HELD  Rule Set 2 GBT",
+    "n": 1066,
+    "n_gene_groups": 6,
+    "spearman_pooled": 0.44739841038826983,
+    "spearman_per_gene_mean": 0.45348960302672037,
+    "spearman_per_gene_sd": 0.12548295629269315,
+    "pearson": 0.4290936122609336,
+    "rmse": 0.263062234853669
+  },
+  "geneheld_LightGBM": {
+    "label": "GENE-HELD  LightGBM",
+    "n": 1066,
+    "n_gene_groups": 6,
+    "spearman_pooled": 0.4749053669719341,
+    "spearman_per_gene_mean": 0.47897653168763615,
+    "spearman_per_gene_sd": 0.11910870935242768,
+    "pearson": 0.4755521933644661,
+    "rmse": 0.2582165599975603
+  },
+  "random_azimuth": {
+    "label": "RANDOM  Rule Set 2 GBT",
+    "n": 1103,
+    "n_gene_groups": 18,
+    "spearman_pooled": 0.5717749804527669,
+    "spearman_per_gene_mean": 0.5436860922631639,
+    "spearman_per_gene_sd": 0.14737746487848613,
+    "pearson": 0.5731874550227399,
+    "rmse": 0.24022102443303744
+  }
+}

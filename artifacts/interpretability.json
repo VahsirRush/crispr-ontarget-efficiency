@@ -1,0 +1,19 @@
+{
+  "n_guides": 1066,
+  "uniform_weight": 0.03333333333333333,
+  "seed_mean_weight": 0.06044667959213257,
+  "nonseed_protospacer_mean_weight": 0.026866909116506577,
+  "pam_mean_weight": 0.08423947542905807,
+  "seed_vs_rest_ratio": 2.2498559951782227,
+  "wilcoxon_p": 2.929081933952475e-123,
+  "consistent_with_seed_prior": true,
+  "gbt_seed_importance_share": 0.5483078841628111,
+  "top_positions": [
+    "N",
+    "20",
+    "14",
+    "G",
+    "19",
+    "12"
+  ]
+}

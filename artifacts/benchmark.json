@@ -1,0 +1,123 @@
+{
+  "table": [
+    {
+      "protocol": "leave-one-gene-out",
+      "model": "Rule Set 2 GBT (Azimuth params)",
+      "n": 5310,
+      "spearman_per_gene_mean": 0.5148133182263752,
+      "spearman_per_gene_sd": 0.08207367564282766,
+      "spearman_pooled": 0.4969151614138249,
+      "rmse": 0.24930884400598957
+    },
+    {
+      "protocol": "leave-one-gene-out",
+      "model": "LightGBM (Rule Set 2 features)",
+      "n": 5310,
+      "spearman_per_gene_mean": 0.5378147677420931,
+      "spearman_per_gene_sd": 0.09317555106898784,
+      "spearman_pooled": 0.5160740435509722,
+      "rmse": 0.24647651169044957
+    },
+    {
+      "protocol": "leave-one-gene-out",
+      "model": "CNN + attention",
+      "n": 5310,
+      "spearman_per_gene_mean": 0.5073055690454501,
+      "spearman_per_gene_sd": 0.07652616331943296,
+      "spearman_pooled": 0.4865233556057544,
+      "rmse": 0.25048150648340745
+    },
+    {
+      "protocol": "gene-held-out test",
+      "model": "Rule Set 2 GBT (Azimuth params)",
+      "n": 1066,
+      "spearman_per_gene_mean": 0.45348960302672037,
+      "spearman_per_gene_sd": 0.12548295629269315,
+      "spearman_pooled": 0.44739841038826983,
+      "rmse": 0.263062234853669
+    },
+    {
+      "protocol": "gene-held-out test",
+      "model": "LightGBM (Rule Set 2 features)",
+      "n": 1066,
+      "spearman_per_gene_mean": 0.47897653168763615,
+      "spearman_per_gene_sd": 0.11910870935242768,
+      "spearman_pooled": 0.4749053669719341,
+      "rmse": 0.2582165599975603
+    },
+    {
+      "protocol": "gene-held-out test",
+      "model": "CNN + attention",
+      "n": 1066,
+      "spearman_per_gene_mean": 0.49501782057896415,
+      "spearman_per_gene_sd": 0.06728126311175217,
+      "spearman_pooled": 0.47150915166400886,
+      "rmse": 0.25426387786865234
+    },
+    {
+      "protocol": "random split (leaky)",
+      "model": "Rule Set 2 GBT (Azimuth params)",
+      "n": 1103,
+      "spearman_per_gene_mean": 0.5436860922631639,
+      "spearman_per_gene_sd": 0.14737746487848613,
+      "spearman_pooled": 0.5717749804527669,
+      "rmse": 0.24022102443303744
+    },
+    {
+      "protocol": "random split (leaky)",
+      "model": "CNN + attention",
+      "n": 1103,
+      "spearman_per_gene_mean": 0.4828640354647671,
+      "spearman_per_gene_sd": 0.13594159560025298,
+      "spearman_pooled": 0.49167625303717627,
+      "rmse": 0.2522403299808502
+    },
+    {
+      "protocol": "in-sample reference",
+      "model": "Azimuth released model (shipped predictions)",
+      "n": 5310,
+      "spearman_per_gene_mean": 0.693808900351293,
+      "spearman_per_gene_sd": 0.06087538067621136,
+      "spearman_pooled": 0.714791702845789,
+      "rmse": 0.21061281109607946
+    }
+  ],
+  "comparisons": [
+    {
+      "model_a": "CNN + attention",
+      "model_b": "Rule Set 2 GBT",
+      "n_groups": 18,
+      "mean_a": 0.5073055690454501,
+      "mean_b": 0.5148133182263752,
+      "mean_diff": -0.007507749180924996,
+      "ci95_low": -0.035794457765661744,
+      "ci95_high": 0.01872672994683518,
+      "wilcoxon_p": 0.7660293579101562,
+      "significant": false
+    },
+    {
+      "model_a": "CNN + attention",
+      "model_b": "LightGBM",
+      "n_groups": 18,
+      "mean_a": 0.5073055690454501,
+      "mean_b": 0.5378147677420931,
+      "mean_diff": -0.030509198696642925,
+      "ci95_low": -0.06340297652381327,
+      "ci95_high": 0.004447697998464875,
+      "wilcoxon_p": 0.06653594970703125,
+      "significant": false
+    },
+    {
+      "model_a": "LightGBM",
+      "model_b": "Rule Set 2 GBT",
+      "n_groups": 18,
+      "mean_a": 0.5378147677420931,
+      "mean_b": 0.5148133182263752,
+      "mean_diff": 0.02300144951571793,
+      "ci95_low": -0.006613485880855771,
+      "ci95_high": 0.046912118296199436,
+      "wilcoxon_p": 0.0055999755859375,
+      "significant": false
+    }
+  ]
+}

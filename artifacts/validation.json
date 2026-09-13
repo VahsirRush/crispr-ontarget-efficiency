@@ -1,0 +1,197 @@
+[
+  {
+    "check": "FC rows within 5 of the paper's 1,841",
+    "passed": true,
+    "detail": "got 1837; Azimuth drops a handful in the gene-position join\n(load_data notes '11 missing guides we were told to ignore')"
+  },
+  {
+    "check": "RES unique guides == the paper's 2,549",
+    "passed": true,
+    "detail": "got 2549 unique 30mers across 3473 rows; MED12 contributes 1848 rows under 2 drugs"
+  },
+  {
+    "check": "gene count == 17",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "check": "split_gene (the reported protocol): no shared 30mer between splits",
+    "passed": true,
+    "detail": "{'train/test': 0, 'train/cal': 0, 'cal/test': 0}"
+  },
+  {
+    "check": "split_random leaks duplicate sequences, as designed to demonstrate",
+    "passed": true,
+    "detail": "{'train/test': 230, 'train/cal': 212, 'cal/test': 77}  -- this split is reported only as a leakage contrast"
+  },
+  {
+    "check": "split_gene: no shared gene between splits",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "check": "probe sequence is a valid 30mer with GG at [25:27]",
+    "passed": true,
+    "detail": "seq=AAAAGGGGGCCCCCTTTTTAAAAAAGGCTT"
+  },
+  {
+    "check": "GC count uses the 20mer protospacer only",
+    "passed": true,
+    "detail": "got 10.0, expected 10 (5 G + 5 C in seq[4:24])"
+  },
+  {
+    "check": "GC>10 and GC<10 indicators are both 0 at exactly 10",
+    "passed": true,
+    "detail": "got 0.0, 0.0"
+  },
+  {
+    "check": "NGGX one-hot fires on seq[24]+seq[27]",
+    "passed": true,
+    "detail": "N=A X=C -> expected NGGX_AC"
+  },
+  {
+    "check": "order-1 position-dependent: 120 features, one per position",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "check": "order-1 position-independent counts match string counts",
+    "passed": true,
+    "detail": "{'A': np.float32(10.0), 'T': np.float32(7.0), 'C': np.float32(6.0), 'G': np.float32(7.0)} vs {'A': 10, 'T': 7, 'C': 6, 'G': 7}"
+  },
+  {
+    "check": "order-2 position-dependent: 29*16 = 464 features",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "check": "order-2 counts sum to 29 dinucleotides",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "check": "one-hot matches the sequence exactly",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "check": "all four Tm values are finite and physically plausible",
+    "passed": true,
+    "detail": "{'tm_global': np.float32(65.61), 'tm_5mer_pam_proximal': np.float32(-44.23), 'tm_8mer_middle': np.float32(6.71), 'tm_5mer_start': np.float32(-8.83)}"
+  },
+  {
+    "check": "no non-finite Tm anywhere in the real dataset",
+    "passed": true,
+    "detail": "ranges: ['54.8..85.8', '-69.3..1.2', '-19.6..37.9', '-69.3..1.2']"
+  },
+  {
+    "check": "full feature matrix width == 630 and names align",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "check": "repeated feature names are exactly the 20 caused by the PAM's two Gs",
+    "passed": true,
+    "detail": "20 duplicated names = 4 (order-1) + 16 (order-2)"
+  },
+  {
+    "check": "RS2 GBT: every row has an out-of-fold prediction, no NaN",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "check": "LightGBM: every row has an out-of-fold prediction, no NaN",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "check": "CNN: every row has an out-of-fold prediction, no NaN",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "check": "OOF predictions are not degenerate (non-zero variance)",
+    "passed": true,
+    "detail": "sds: {'RS2 GBT': 0.1318, 'LightGBM': 0.1696, 'CNN': 0.1465}"
+  },
+  {
+    "check": "the three models are correlated but not identical",
+    "passed": true,
+    "detail": "GBT-CNN r = 0.823"
+  },
+  {
+    "check": "GBT on shuffled labels collapses to ~0",
+    "passed": true,
+    "detail": "shuffled = +0.0076  vs  real = +0.4535"
+  },
+  {
+    "check": "real signal is far above the shuffled control",
+    "passed": true,
+    "detail": "gap = 0.4459"
+  },
+  {
+    "check": "in-sample refit agrees with the released model (Spearman > 0.85)",
+    "passed": true,
+    "detail": "Spearman vs shipped predictions = 0.9664"
+  },
+  {
+    "check": "in-sample fit reaches a similar ceiling to the released model",
+    "passed": true,
+    "detail": "ours in-sample 0.7128 vs shipped 0.7148"
+  },
+  {
+    "check": "synthetic exchangeable data: coverage tracks nominal within 2%",
+    "passed": true,
+    "detail": "0.95->0.950  0.90->0.899  0.80->0.805"
+  },
+  {
+    "check": "quantile uses the ceil((n+1)(1-alpha)) order statistic",
+    "passed": true,
+    "detail": "alpha=0.10 -> 91.0 (expect 91), alpha=0.05 -> 96.0 (expect 96)"
+  },
+  {
+    "check": "coverage decreases as alpha increases",
+    "passed": true,
+    "detail": "a=0.05: 0.950  a=0.1: 0.899  a=0.2: 0.805"
+  },
+  {
+    "check": "split_random: conformal calibration and test rows are disjoint",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "check": "split_gene: conformal calibration and test rows are disjoint",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "check": "random-split 90% coverage holds after removing leaked test rows",
+    "passed": true,
+    "detail": "all test rows: 0.902 (n=1103)   unseen sequences only: 0.892 (n=872)"
+  },
+  {
+    "check": "Rule Set 2 GBT (Azimuth params) LOGO reproduces from saved OOF",
+    "passed": true,
+    "detail": "0.514813 vs reported 0.514813"
+  },
+  {
+    "check": "LightGBM (Rule Set 2 features) LOGO reproduces from saved OOF",
+    "passed": true,
+    "detail": "0.537815 vs reported 0.537815"
+  },
+  {
+    "check": "CNN + attention LOGO reproduces from saved OOF",
+    "passed": true,
+    "detail": "0.507306 vs reported 0.507306"
+  },
+  {
+    "check": "CNN gene-held-out test reproduces from saved predictions",
+    "passed": true,
+    "detail": "0.4950 vs reported 0.4950"
+  },
+  {
+    "check": "baseline sits in the Doench 2016 Fig. 4c band (0.4-0.6)",
+    "passed": true,
+    "detail": "0.5148"
+  }
+]
