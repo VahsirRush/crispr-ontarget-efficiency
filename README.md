@@ -317,7 +317,7 @@ saw gives **89.2%** at 90% nominal, against 90.2% on all rows.
 
 **Melting temperature on short segments is not physically meaningful.** Rule Set 2 computes
 Tm on 5nt, 8nt and 5nt sub-segments, which is below the range where nearest-neighbour
-thermodynamics is valid; the 5-mer values come out negative (-69 to +1  degC). This is
+thermodynamics is valid; the 5-mer values come out negative (-69 to +1 degC). This is
 inherited from the original design, not introduced here; Azimuth computes Tm on exactly
 these segments. The values still function as deterministic sequence summaries, which is
 how the model uses them, but they should not be read as temperatures.

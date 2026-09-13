@@ -254,7 +254,7 @@
             "than for ranking individual guides.</p></div>"
           : "") +
         "<p class='hint'>GC in protospacer " + r.gcCount + "/20 | " +
-          "Tm(30mer) " + r.thermoRaw[3].toFixed(1) + "  degC | " +
+          "Tm(30mer) " + r.thermoRaw[3].toFixed(1) + " degC | " +
           "per-seed " + r.perSeed.map(function (p) { return p.toFixed(3); }).join(", ") + "</p>";
 
       window.Charts.bars(attn, {
@@ -666,7 +666,7 @@
       "<p><strong>Melting temperature on short segments is not physically meaningful.</strong> " +
       "Rule Set 2 computes Tm on 5nt and 8nt sub-segments, below the range where " +
       "nearest-neighbour thermodynamics is valid, so the 5-mer values come out negative " +
-      "(-69 to +1  degC). This is inherited from the original design, not introduced here.</p></div>";
+      "(-69 to +1 degC). This is inherited from the original design, not introduced here.</p></div>";
 
     $("#t-val", root).innerHTML = table(
       ["Check", "Observed"],
