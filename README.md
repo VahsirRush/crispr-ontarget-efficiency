@@ -346,8 +346,10 @@ exploration.
 .venv/bin/streamlit run dashboard/app.py               # interactive version
 ```
 
-To publish the static one, point GitHub Pages at the `dashboard/` directory on the default
-branch; `index.html` needs no build step on the hosting side.
+To publish the static one: Settings → Pages → deploy from branch `main`, folder `/ (root)`.
+Pages only serves from the root or `/docs`, so the dashboard lands at
+`<pages-url>/dashboard/` rather than the bare domain. No build step is needed on the
+hosting side.
 
 ### Scoring a guide
 
