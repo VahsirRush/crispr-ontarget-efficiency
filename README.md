@@ -16,10 +16,9 @@ predicts, and a gradient-boosted-tree importance control independently agrees.
 
 ## Quick start
 
-The trained model and all results are committed, so nothing needs retraining.
+The trained model and all results are committed, so no retraining is needed.
 
-**Just look at the results.** Open `dashboard/index.html` in any browser. It is a single
-self-contained file: no server, no install, no network. Eight sections including a guide
+**Just look at the results.** Open `dashboard/index.html` in any browser. Eight sections, including a guide
 scorer that runs the trained network in your browser.
 
 **Run the interactive version.**
@@ -38,7 +37,7 @@ bash scripts/fetch_azimuth.sh          # downloads the source data (~4 MB)
 .venv/bin/python scripts/08_validate.py
 ```
 
-Full retraining is section 9. It takes roughly 1.5 hours on CPU and is not needed for
+Full retraining is in section 9. It takes roughly 1.5 hours on CPU and is not needed for
 anything above.
 
 | Where to look | What is there |
